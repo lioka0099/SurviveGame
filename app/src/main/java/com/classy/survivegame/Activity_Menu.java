@@ -59,7 +59,7 @@ public class Activity_Menu extends AppCompatActivity {
                 runOnUiThread(() -> {
                     String id = menu_EDT_id.getText().toString();
                     if (id.length() != 9) {
-                        Toast.makeText(Activity_Menu.this, "ID must be 9 number", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Activity_Menu.this, "ID must be 9 numbers", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     startGame(id, finalData);
