@@ -2,14 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:versionCode="1"
     android:versionName="1.0"
-    android:compileSdkVersion="30"
-    android:compileSdkVersionCodename="11"
-    package="com.classy.survivegame"
-    android:platformBuildVersionCode="30"
-    android:platformBuildVersionName="11">
+    package="com.classy.survivegame">
     <uses-sdk
         android:minSdkVersion="28"
-        android:targetSdkVersion="34"/>
+        android:targetSdkVersion="36"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:theme="@style/Theme.SurviveGame"
