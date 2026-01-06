@@ -100,7 +100,13 @@ digit % 4 → direction
 ⬆️ ➡️ ➡️ ➡️ ⬇️ ➡️ ⬅️ ➡️ ⬅️  
 
 **Result:**  
-Survived in Pennsylvania
+The screenshot below shows the successful completion of the game
+using ID **211971858**, resulting in the message:
+
+**"Survived in Pennsylvania"**
+<p align="left">
+  <img src="screenshots/screenshot.jpg" width="300"/>
+</p>
 
 ---
 
