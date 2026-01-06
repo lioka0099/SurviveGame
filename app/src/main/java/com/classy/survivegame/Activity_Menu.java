@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -42,26 +44,40 @@ public class Activity_Menu extends AppCompatActivity {
     }
 
     /* JADX INFO: Access modifiers changed from: private */
-    public void makeServerCall() {
-        Thread thread = new Thread() { // from class: com.classy.survivegame.Activity_Menu.2
-            @Override // java.lang.Thread, java.lang.Runnable
-            public void run() {
-                String url = Activity_Menu.this.getString(R.string.url);
-                String data = Activity_Menu.getJSON(url);
-                Log.d("pttt", data);
-                if (data != null) {
-                    Activity_Menu activity_Menu = Activity_Menu.this;
-                    activity_Menu.startGame(activity_Menu.menu_EDT_id.getText().toString(), data);
-                }
+    private void makeServerCall() {
+        Thread thread = new Thread(() -> {
+            String url = Activity_Menu.this.getString(R.string.url);
+            String data = Activity_Menu.getJSON(url);
+            if (data != null) {
+                data = data.replace("\n", "").trim();
             }
-        };
+
+            Log.d("pttt", data);
+            if (data != null) {
+                // לקרוא ל־startGame על ה־main thread
+                String finalData = data;
+                runOnUiThread(() -> {
+                    String id = menu_EDT_id.getText().toString();
+                    if (id.length() != 9) {
+                        Toast.makeText(Activity_Menu.this, "ID must be 9 number", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    startGame(id, finalData);
+                });
+            }
+        });
         thread.start();
     }
 
     /* JADX INFO: Access modifiers changed from: private */
     public void startGame(String id, String data) {
         String[] splits = data.split(",");
-        String state = splits[Integer.valueOf(String.valueOf(id.charAt(7))).intValue()];
+        int index = Character.getNumericValue(id.charAt(7));
+        if (index < 0 || index >= splits.length) {
+            Toast.makeText(this, "No country found", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String state = splits[index];
         Intent intent = new Intent(getBaseContext(), (Class<?>) Activity_Game.class);
         intent.putExtra(Activity_Game.EXTRA_ID, id);
         intent.putExtra(Activity_Game.EXTRA_STATE, state);
